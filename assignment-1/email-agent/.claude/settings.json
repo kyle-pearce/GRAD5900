@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "gmail": {
+      "command": "npx",
+      "args": ["-y", "@shinzolabs/gmail-mcp"],
+      "env": {
+        "GOOGLE_CLIENT_ID": "${GOOGLE_CLIENT_ID}",
+        "GOOGLE_CLIENT_SECRET": "${GOOGLE_CLIENT_SECRET}",
+        "GOOGLE_REFRESH_TOKEN": "${GOOGLE_REFRESH_TOKEN}"
+      }
+    },
+    "outlook": {
+      "command": "npx",
+      "args": ["-y", "ms-365-mcp-server"],
+      "env": {
+        "MS_CLIENT_ID": "${MS_CLIENT_ID}",
+        "MS_CLIENT_SECRET": "${MS_CLIENT_SECRET}",
+        "MS_REFRESH_TOKEN": "${MS_REFRESH_TOKEN}"
+      }
+    }
+  }
+}

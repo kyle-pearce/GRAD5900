@@ -1,0 +1,16 @@
+# Credentials — never commit
+.env
+credentials/
+token*.json
+*.secret
+
+# Dependencies
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS artifacts
+.DS_Store
+Thumbs.db
