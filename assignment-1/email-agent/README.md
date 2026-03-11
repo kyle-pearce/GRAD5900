@@ -3,6 +3,9 @@
 An AI-powered system for aligning daily work with long-term goals — built on Claude Code and
 Gemini CLI, powered by your own context. Not a productivity hack. A strategic thinking partner.
 
+**Ready to set up?** Open [`docs/quickstart.md`](docs/quickstart.md) and paste the Phase 0
+bootstrap prompt into Claude Code. The assistant will guide you from there.
+
 ---
 
 ## A Day in the Life
