@@ -1,18 +1,30 @@
-# Claude Code — Email Draft Agent
+# Claude Code — Personal Assistant Kit
 
 This file extends AGENTS.md with Claude Code-specific configuration.
 
 ---
 
-## Skill Loading
+## Skills
 
-Use the `draft-emails` skill defined in `.claude/skills/draft-emails/SKILL.md`.
+Skills are defined in `.claude/skills/`. Each skill loads only the context files it needs.
+Context files live in `.claude/context/` and are filled in during the quickstart interview.
 
-Load all steering files from `./steering/` at the start of every draft-email session:
-- `./steering/writing-style.md`
-- `./steering/context.md`
-- `./steering/response-framework.md`
-- `./steering/email-goals.md`
+Available skills and their trigger phrases:
+
+| Skill | Trigger phrases |
+|-------|----------------|
+| `resume` | "resume", "good morning", "start session", "pick up where we left off" |
+| `handoff` | "end session", "write handoff", "I'm done for today" |
+| `reflect` | "daily reflection", "end of day", "reflect" |
+| `weekly-report` | "weekly review", "end of week", "weekly synthesis" |
+| `week-plan` | "plan my week", "weekly planning", "Monday planning" |
+| `meeting` | "process meeting", "I just had a meeting", "meeting notes for" |
+| `coaching-prep` | "prep for 1:1", "1:1 with [person]", "coaching prep" |
+| `follow-up-meeting` | "draft calendar invite", "schedule follow-up", "book a meeting after" |
+| `follow-up-email` | "draft email", "help me reply to", "compose a reply", "follow-up email" |
+| `stakeholder-update` | "draft status update", "project update for [person]", "stakeholder update" |
+| `review-doc` | "review this doc", "give me feedback on", "critique this" |
+| `decision` | "help me decide", "thinking through a decision", "I have a hard call to make" |
 
 ---
 
@@ -25,5 +37,5 @@ MCP servers are declared in `.claude/settings.json`. Credentials are read from t
 
 ## Inherited Instructions
 
-All trigger phrases, workflow steps, output format, and constraints are defined in `AGENTS.md`.
-This file only adds Claude-specific overrides; `AGENTS.md` governs behavior.
+All trigger phrases, workflow steps, output format, and constraints are defined per-skill
+in `.claude/skills/<name>/SKILL.md`. `AGENTS.md` governs universal behavior and constraints.

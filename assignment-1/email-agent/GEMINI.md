@@ -7,11 +7,12 @@ It mirrors the structure of CLAUDE.md for cross-ecosystem compatibility via Stit
 
 ## Context Loading
 
-At the start of every draft-email session, load all steering files from `./steering/`:
-- `./steering/writing-style.md`
-- `./steering/context.md`
-- `./steering/response-framework.md`
-- `./steering/email-goals.md`
+Context files live in `.claude/context/`. Each skill loads only the files it needs.
+For email drafting, the relevant files are:
+- `.claude/context/writing-style.md`
+- `.claude/context/context.md`
+- `.claude/context/response-framework.md`
+- `.claude/context/email-goals.md`
 
 ---
 

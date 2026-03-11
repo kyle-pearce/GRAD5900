@@ -1,10 +1,10 @@
 ---
-name: draft-emails
+name: follow-up-email
 description: >
-  Draft a reply to an email. Triggered by "draft email", "draft emails",
+  Draft a reply to an email. Triggered by "draft email", "follow-up email",
   "help me reply to [email]", "write a response to", "email response",
   "compose a reply", "draft a reply".
-  Reads Gmail and Outlook inboxes via MCP, applies writing-style steering,
+  Reads Gmail and Outlook inboxes via MCP, applies personal writing style,
   and presents a draft for user review. Never sends automatically.
 allowed-tools: mcp__gmail__*, mcp__outlook__*, Read
 context: fork
@@ -15,7 +15,7 @@ context: fork
 This skill activates on any of the following trigger phrases:
 
 - `draft email`
-- `draft emails`
+- `follow-up email`
 - `help me reply to [email description or paste]`
 - `write a response to [email]`
 - `email response`
@@ -29,6 +29,19 @@ Examples that activate this skill:
 > "Help me reply to the email from my advisor"
 > "Draft a response to the meeting request I just got"
 > "Write a response to this: [pasted email]"
+
+---
+
+## Context Files
+
+This skill reads the following files before drafting:
+
+- `.claude/context/writing-style.md` — tone, voice, sign-offs, phrases to use/avoid
+- `.claude/context/context.md` — role, org, sender relationships
+- `.claude/context/response-framework.md` — structure, length, opening/closing conventions
+- `.claude/context/email-goals.md` — communication goals, recurring scenarios, response expectations
+
+If any file has unfilled `[PLACEHOLDER]` sections, note this and use reasonable defaults.
 
 ---
 
@@ -62,18 +75,9 @@ mcp__outlook__get_message(id=[message_id])
 
 Read the full thread, not just the most recent message, to preserve context.
 
-### Step 3 — Load Steering Context
+### Step 3 — Load Context
 
-Before drafting, read all files in `./steering/`:
-
-```
-Read("./steering/writing-style.md")
-Read("./steering/context.md")
-Read("./steering/response-framework.md")
-Read("./steering/email-goals.md")
-```
-
-Apply all style guidance, tone preferences, and relationship context when composing.
+Read the four context files listed above before drafting.
 
 ### Step 4 — Draft Reply
 
@@ -125,16 +129,6 @@ Review this draft and let me know if you'd like changes:
 - "save draft" — save to Gmail/Outlook without sending
 ---
 ```
-
----
-
-## Steering
-
-Always load and apply steering context before drafting. The steering files are templates —
-fill in `[PLACEHOLDER]` sections with personal information before use.
-
-If a steering file has not been filled in (placeholders still present), note this to the user
-and use reasonable defaults based on the email content.
 
 ---
 

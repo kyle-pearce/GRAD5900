@@ -1,4 +1,4 @@
-# Email Draft Agent
+# Personal Assistant Kit
 
 Universal agent instructions — readable by Claude Code, Gemini CLI, Cursor, Copilot, and any
 agent runtime that follows the Agent Skills open standard.
@@ -7,110 +7,82 @@ agent runtime that follows the Agent Skills open standard.
 
 ## Purpose
 
-Auto-draft email replies by reading Gmail and Outlook inboxes via MCP tools, applying personal
-writing-style steering, and presenting a polished draft for manual review.
-
-**This agent NEVER sends email automatically. It only drafts.**
-
----
-
-## Trigger Phrases
-
-Activate this agent when the user says any of:
-
-- `draft email`
-- `draft emails`
-- `help me reply to [email]`
-- `write a response to [email]`
-- `email response`
-- `compose a reply`
-- `draft a reply`
+An AI-powered personal assistant that aligns daily work with long-term goals. It handles
+reflection, meeting processing, communication drafting, and strategic thinking — drawing on
+persistent context about who you are and what you're trying to accomplish.
 
 ---
 
-## Steering Files
+## Context Files
 
-Before drafting any email, load context from the `./steering/` directory:
+Personal context lives in `.claude/context/`. These files are filled in during the quickstart
+interview and referenced by individual skills. Each skill loads only what it needs.
 
 | File | Purpose |
 |------|---------|
-| `steering/writing-style.md` | Tone, voice, preferred sign-offs, phrases to use/avoid |
-| `steering/context.md` | User role, org type, sender relationships |
-| `steering/response-framework.md` | Structure, length, opening/closing conventions |
-| `steering/email-goals.md` | Communication goals, recurring scenarios, response expectations |
+| `goals.md` | Long-term goals, annual priorities, tension points |
+| `projects.md` | Active projects, stakeholders, blockers, priority map |
+| `meetings.md` | Recurring meetings, key relationships, standing context |
+| `context.md` | Role, org, sender relationships, timezone, communication preferences |
+| `decision-patterns.md` | Decision process, failure modes, strengths, blind spots |
+| `writing-style.md` | Tone, voice, sign-offs, phrases to use/avoid |
+| `email-goals.md` | Communication goals, response norms, recurring scenarios |
+| `response-framework.md` | Email structure, length guidelines, scenario-specific patterns |
 
-> **Note for users:** Fill in the `[PLACEHOLDER]` sections in each steering file with your own
-> information. Do NOT commit filled-in steering files to a public repository.
-
----
-
-## Agent Workflow
-
-1. **Identify target email** — Ask the user which email to reply to, or infer from context
-2. **Fetch email thread** — Use Gmail or Outlook MCP tools to read the full thread
-3. **Load steering context** — Read all files in `./steering/` before drafting
-4. **Draft reply** — Apply writing style and response framework to compose the reply
-5. **Present for review** — Output a labeled draft; offer a revision loop
+> **Note:** Fill in the `[PLACEHOLDER]` sections in each file. Do NOT commit filled-in
+> context files to a public repository — they contain personal information.
 
 ---
 
-## MCP Tools Available
+## Skills
 
-### Gmail (server: `gmail`)
+### Session Management
+- `resume` — Load prior session context and orient to current state
+- `handoff` — Write a session handoff without a full reflection dialogue
 
-| Tool | Purpose |
-|------|---------|
-| `list_messages` | Fetch recent inbox emails |
-| `get_message` | Read full email and thread |
-| `search_messages` | Find email by sender, subject, or keyword |
-| `create_draft` | Save draft in Gmail (does NOT send) |
+### Reflection & Synthesis
+- `reflect` — Daily end-of-day reflection; writes session handoff
+- `weekly-report` — Weekly synthesis against goals and patterns
+- `week-plan` — Plan the week ahead using goals, projects, and meetings
 
-### Outlook (server: `outlook`)
+### Meeting Workflow
+- `meeting` — Process a completed meeting: decisions, actions, relationship notes
+- `coaching-prep` — Prepare for a 1:1 (with manager or direct report)
+- `follow-up-meeting` — Draft a calendar invite for a follow-up meeting
 
-| Tool | Purpose |
-|------|---------|
-| `list_messages` | Fetch recent inbox emails |
-| `get_message` | Read full email and thread |
-| `create_draft` | Save draft in Outlook (does NOT send) |
+### Communication
+- `follow-up-email` — Draft an email reply using personal writing style and email goals
+- `stakeholder-update` — Draft a project status update for a stakeholder
 
----
-
-## Output Format
-
-Every draft must follow this structure:
-
-```
----
-DRAFT EMAIL REPLY
----
-
-To: [recipient]
-Subject: Re: [original subject]
-
-[Body of email]
-
-[Sign-off],
-[Name]
-
----
-Would you like to revise this draft? Options:
-- "revise tone" — adjust formality level
-- "make shorter" — condense the email
-- "make longer" — expand with more detail
-- "add [X]" — insert a specific point
-- "change sign-off" — try a different closing
----
-```
+### Thinking & Review
+- `review-doc` — Review a document; provide structured feedback
+- `decision` — Structure a hard decision using the user's known decision patterns
 
 ---
 
-## Constraints
+## Handoff Files
 
-- **NEVER** call any send tool (`send_message`, `send_email`, etc.)
-- **NEVER** store or log email content to disk
+Agents that produce persistent output write to `handoffs/`. These files are owned by the
+user and are never sent or shared automatically.
+
+| File | Written by |
+|------|-----------|
+| `handoffs/session-handoff.md` | `reflect`, `handoff` |
+| `handoffs/weekly-[date].md` | `weekly-report` |
+| `handoffs/week-plan-[date].md` | `week-plan` |
+| `handoffs/meeting-[date]-[name].md` | `meeting` |
+| `handoffs/decision-[topic].md` | `decision` (optional) |
+
+---
+
+## Universal Constraints
+
+- **NEVER** send email or calendar invites automatically
+- **NEVER** store email thread content to disk
 - **NEVER** include personal data from emails in memory or session files
-- Always present the draft and wait for explicit user approval
-- If the email is ambiguous, include one clarifying question in the draft body rather than guessing
+- Always present drafts and wait for explicit user approval before saving
+- If uncertain about tone or content, surface the ambiguity and offer alternatives
+- Credentials are injected via environment variables — never appear in committed files
 
 ---
 

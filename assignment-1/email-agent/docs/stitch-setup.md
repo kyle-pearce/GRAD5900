@@ -18,11 +18,11 @@ on another. The `skill-porter` tool converts Claude Code skills into Gemini CLI 
 ## Architecture
 
 ```
-AGENTS.md                          ← Single source of truth (all platforms)
-├── CLAUDE.md                      ← Claude Code thin wrapper
-├── GEMINI.md                      ← Gemini CLI thin wrapper
-└── .claude/skills/draft-emails/   ← Claude skill definition
-    └── SKILL.md                   → skill-porter → Gemini CLI Extension
+AGENTS.md                              ← Single source of truth (all platforms)
+├── CLAUDE.md                          ← Claude Code thin wrapper
+├── GEMINI.md                          ← Gemini CLI thin wrapper
+└── .claude/skills/follow-up-email/    ← Claude skill definition
+    └── SKILL.md                       → skill-porter → Gemini CLI Extension
 ```
 
 ---
@@ -44,8 +44,8 @@ From the `email-agent/` directory, run:
 
 ```bash
 skill-porter convert \
-  .claude/skills/draft-emails/SKILL.md \
-  --output ./gemini-extensions/draft-emails/
+  .claude/skills/follow-up-email/SKILL.md \
+  --output ./gemini-extensions/follow-up-email/
 ```
 
 This generates a Gemini CLI Extension manifest from the SKILL.md definition.
@@ -53,7 +53,7 @@ This generates a Gemini CLI Extension manifest from the SKILL.md definition.
 ### Step 2 — Register the Extension
 
 ```bash
-gemini extension install ./gemini-extensions/draft-emails/
+gemini extension install ./gemini-extensions/follow-up-email/
 ```
 
 Verify it appears in your extension list:
@@ -91,7 +91,7 @@ The extension should activate and begin the draft-email workflow.
 `GEMINI.md` is loaded by Gemini CLI as a project context file (equivalent to Claude's
 `CLAUDE.md`). It:
 
-1. Points Gemini to the `./steering/` files for writing style context
+1. Points Gemini to the `.claude/context/` files for writing style context
 2. Declares the same trigger phrases as the Claude skill
 3. References `AGENTS.md` for the full workflow and constraints
 
@@ -106,11 +106,11 @@ When you update `SKILL.md` or `AGENTS.md`, re-run the skill-porter conversion:
 
 ```bash
 skill-porter convert \
-  .claude/skills/draft-emails/SKILL.md \
-  --output ./gemini-extensions/draft-emails/ \
+  .claude/skills/follow-up-email/SKILL.md \
+  --output ./gemini-extensions/follow-up-email/ \
   --overwrite
 
-gemini extension install ./gemini-extensions/draft-emails/ --force
+gemini extension install ./gemini-extensions/follow-up-email/ --force
 ```
 
 ---
@@ -123,7 +123,7 @@ gemini extension install ./gemini-extensions/draft-emails/ --force
 | Context file | CLAUDE.md | GEMINI.md |
 | Trigger matching | Semantic (built-in) | Extension manifest |
 | MCP support | Native | Via extension bridge |
-| Steering files | Auto-loaded by skill | Loaded via GEMINI.md context |
+| Context files | Loaded by skill as needed | Loaded via GEMINI.md context |
 
 ---
 
@@ -133,7 +133,7 @@ gemini extension install ./gemini-extensions/draft-emails/ --force
 
 - Check `gemini extension list` — confirm it's installed
 - Ensure you're running from the `email-agent/` directory (GEMINI.md must be present)
-- Try an explicit trigger: `@draft-emails draft email` if direct activation fails
+- Try an explicit trigger: `@follow-up-email draft email` if direct activation fails
 
 ### MCP tools not available
 
