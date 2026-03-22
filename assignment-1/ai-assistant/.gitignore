@@ -4,6 +4,16 @@ credentials/
 token*.json
 *.secret
 
+# Personal context files — contain private goals, projects, relationships
+# Safe to commit while placeholders are unfilled; gitignore once filled in
+.claude/context/
+
+# Local Claude Code settings overrides
+.claude/settings.local.json
+
+# Session handoff notes — personal reflection data
+handoffs/
+
 # Dependencies
 node_modules/
 

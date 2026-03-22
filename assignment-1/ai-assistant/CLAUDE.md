@@ -35,6 +35,12 @@ MCP servers are declared in `.claude/settings.json`. Credentials are read from t
 
 ---
 
+## Subagent Model
+
+Always launch Opus subagents unless specified otherwise.
+
+---
+
 ## Inherited Instructions
 
 All trigger phrases, workflow steps, output format, and constraints are defined per-skill

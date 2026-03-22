@@ -1,0 +1,6 @@
+.env
+.chroma/
+eval/results/*.json
+__pycache__/
+*.pyc
+.venv/

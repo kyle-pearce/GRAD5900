@@ -1,0 +1,43 @@
+[
+  {
+    "_comment": "Replace these examples with real Q&A pairs derived from your ingested documents.",
+    "question": "What is the primary goal of the personal assistant project?",
+    "ground_truth": "The primary goal is to align daily work with long-term goals by giving the AI assistant deep, persistent context about who the user is and what they are trying to accomplish."
+  },
+  {
+    "question": "What skills does the assistant support for session management?",
+    "ground_truth": "The assistant supports 'resume' to reload prior session context, and 'handoff' to write a session summary quickly without a full reflection dialogue."
+  },
+  {
+    "question": "Which context files are loaded by the follow-up-email skill?",
+    "ground_truth": "The follow-up-email skill loads context.md, writing-style.md, email-goals.md, and response-framework.md."
+  },
+  {
+    "question": "What platforms does the personal assistant kit support?",
+    "ground_truth": "The kit supports Claude Code, Gemini CLI, Cursor, and Copilot. Each platform has its own config file: CLAUDE.md, GEMINI.md, and AGENTS.md respectively."
+  },
+  {
+    "question": "What does the reflect skill do?",
+    "ground_truth": "The reflect skill is a daily end-of-day conversational check-in that surfaces patterns from the user's decision history and writes a session handoff note."
+  },
+  {
+    "question": "Where are handoff files stored and who writes them?",
+    "ground_truth": "Handoff files are stored in the handoffs/ directory. They are written by the reflect and handoff skills for session notes, weekly-report for weekly syntheses, week-plan for weekly plans, meeting for meeting records, and optionally decision for decision frames."
+  },
+  {
+    "question": "What is the weekly-report skill used for?",
+    "ground_truth": "The weekly-report skill synthesizes the week against the user's long-term goals and recurring patterns, and writes a dated weekly report file."
+  },
+  {
+    "question": "What universal constraint applies to email and calendar actions?",
+    "ground_truth": "The assistant must never send email or calendar invites automatically. It always presents drafts and waits for explicit user approval before saving or sending."
+  },
+  {
+    "question": "How are credentials handled in the personal assistant kit?",
+    "ground_truth": "Credentials are injected via environment variables at runtime. No API keys, tokens, or OAuth credentials appear in any committed file. The .env.example file lists required variable names."
+  },
+  {
+    "question": "What does the decision skill do?",
+    "ground_truth": "The decision skill frames a hard decision using the user's known decision patterns, surfaces potential blind spots, and gives a direct recommendation."
+  }
+]
