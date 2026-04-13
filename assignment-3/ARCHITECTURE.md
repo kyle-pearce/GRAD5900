@@ -835,22 +835,21 @@ grad5900/
     │   ├── knowledge-server/
     │   │   ├── server.py                  ← FastMCP: query, ingest, stats
     │   │   ├── requirements.txt
-    │   │   └── README.md
+    │   │   └── .env.example
     │   │
     │   └── calendar-server/
     │       ├── server.py                  ← FastMCP: list, availability, create
     │       ├── requirements.txt
-    │       └── README.md
+    │       └── .env.example
     │
     ├── orchestrator/
-    │   ├── ORCHESTRATOR.md                ← Skill definition for orchestrator agent
-    │   ├── workflows.md                   ← Workflow dependency graphs + step definitions
-    │   └── conflicts.md                   ← Conflict detection rules and escalation patterns
+    │   └── SKILL.md                       ← Orchestrator skill: workflows, context routing, conflict rules
     │
     ├── approval/
     │   ├── tiers.md                       ← Tier classification for all tools/actions
     │   └── action-log-template.md         ← Template for the audit trail
     │
+    ├── claude-settings.json               ← MCP server registration for Claude Code
     └── README.md                          ← Setup, testing, and demo instructions
 ```
 

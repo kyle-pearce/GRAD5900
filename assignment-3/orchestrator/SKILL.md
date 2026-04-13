@@ -15,6 +15,22 @@ gives a compound request (one that involves multiple skills or tools),
 you decompose it into steps, execute them in order, and synthesize the
 results.
 
+## Setup — Required Files
+
+Before executing any workflow, read these files to load the approval
+rules and logging template:
+
+1. **Read `approval/tiers.md`** — contains the authoritative tier
+   classification for every tool and action. Use this to determine
+   whether to auto-execute, log, pause, or escalate at each step.
+2. **Read `approval/action-log-template.md`** — contains the table
+   header format for the audit trail. Append Tier 1+ actions to
+   `handoffs/action-log.md` using this format.
+
+These files are relative to the assignment-3 directory. If running from
+assignment-1, the paths are `../assignment-3/approval/tiers.md` and
+`../assignment-3/approval/action-log-template.md`.
+
 ## When to Activate
 
 Activate when the user's request maps to MORE than one skill or involves
@@ -53,17 +69,16 @@ Steps:
 5. Call **ingest_single_file** (MCP) with the week plan file (Tier 1 — auto, log)
 
 Present results as:
-````
-MONDAY KICKOFF PACKAGE
 
-Week Plan                    (saved)
-- Top 3 priorities
-- Meeting prep needed
-- Watch-out
+    MONDAY KICKOFF PACKAGE
 
-1:1 Prep — [Person 1]       [save? Y/N]
-1:1 Prep — [Person 2]       [save? Y/N]
-````
+    Week Plan                    (saved)
+    - Top 3 priorities
+    - Meeting prep needed
+    - Watch-out
+
+    1:1 Prep — [Person 1]       [save? Y/N]
+    1:1 Prep — [Person 2]       [save? Y/N]
 
 ### Workflow 2: End of Day (Reflection Chain)
 
@@ -147,17 +162,16 @@ Steps:
 6. Call **ingest_single_file** (MCP) with weekly report (Tier 1 — auto, log)
 
 Present results as:
-````
-WEEK CLOSE PACKAGE
 
-Session Handoff        (saved)
-Weekly Report          (saved)
+    WEEK CLOSE PACKAGE
 
-Manager Status Update  [send? Y/N]
-To: manager@company.com
-Subject: Week of [date] — Status Update
-[draft body...]
-````
+    Session Handoff        (saved)
+    Weekly Report          (saved)
+
+    Manager Status Update  [send? Y/N]
+    To: manager@company.com
+    Subject: Week of [date] — Status Update
+    [draft body...]
 
 ## Context Routing
 
@@ -203,19 +217,17 @@ Never resolve conflicts autonomously.
 
 After completing a workflow, present results as:
 
-````
-Workflow: [name]
+    Workflow: [name]
 
-[Step 1 result summary]
-[Step 2 result summary]
-...
+    [Step 1 result summary]
+    [Step 2 result summary]
+    ...
 
-Insights: [any patterns or conflicts surfaced]
+    Insights: [any patterns or conflicts surfaced]
 
-Actions taken:
-  - [Tier 1 action] — auto
-  - [Tier 2 action] — approved / rejected
-````
+    Actions taken:
+      - [Tier 1 action] — auto
+      - [Tier 2 action] — approved / rejected
 
 ## Audit Logging
 

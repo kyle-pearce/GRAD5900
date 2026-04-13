@@ -15,7 +15,7 @@ Tools exposed:
 """
 
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import date as date_type, datetime, time, timedelta, timezone
 
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
@@ -113,8 +113,15 @@ def check_availability(
         List of busy slots, or confirmation that the day is free.
     """
     service = _get_service()
-    time_min = f"{date}T{start_hour:02d}:00:00"
-    time_max = f"{date}T{end_hour:02d}:00:00"
+
+    # The freebusy API expects RFC3339 timestamps. We build timezone-aware
+    # datetimes using ZoneInfo so the offset is included in the serialized string.
+    from zoneinfo import ZoneInfo
+
+    tz = ZoneInfo(TIMEZONE)
+    year, month, day = map(int, date.split("-"))
+    time_min = datetime(year, month, day, start_hour, tzinfo=tz).isoformat()
+    time_max = datetime(year, month, day, end_hour, tzinfo=tz).isoformat()
 
     body = {
         "timeMin": time_min,
@@ -165,14 +172,17 @@ def create_event(
     """
     service = _get_service()
 
-    # Parse start time
+    # Parse start time and compute end time using datetime arithmetic
+    # so that events crossing midnight roll over to the next day correctly.
     start_h, start_m = map(int, start_time.split(":"))
-    start_dt = f"{date}T{start_h:02d}:{start_m:02d}:00"
+    year, month, day = map(int, date.split("-"))
+    start_datetime = datetime.combine(
+        date_type(year, month, day), time(start_h, start_m)
+    )
+    end_datetime = start_datetime + timedelta(minutes=duration_minutes)
 
-    # Calculate end time
-    total_minutes = start_h * 60 + start_m + duration_minutes
-    end_h, end_m = divmod(total_minutes, 60)
-    end_dt = f"{date}T{end_h:02d}:{end_m:02d}:00"
+    start_dt = start_datetime.strftime("%Y-%m-%dT%H:%M:%S")
+    end_dt = end_datetime.strftime("%Y-%m-%dT%H:%M:%S")
 
     event = {
         "summary": summary,
