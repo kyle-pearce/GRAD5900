@@ -1,0 +1,19 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# ChromaDB vector store
+.chroma/
+
+# Session outputs
+handoffs/
+context/.onboarded
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
