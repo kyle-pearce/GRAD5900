@@ -73,6 +73,7 @@ async def send_message(req: SendRequest):
         if assistant_tokens:
             new_history.append({"role": "assistant", "content": "".join(assistant_tokens)})
         _sessions[session_id] = new_history
+        loop.call_soon_threadsafe(queue.put_nowait, {"event": "done", "data": ""})
 
     loop.run_in_executor(_executor, run_skill)
     return {"session_id": session_id}
@@ -124,6 +125,8 @@ async def close_session(req: CloseRequest):
                 queue.put_nowait, {"event": "token", "data": f"\n\n[Error: {exc}]"}
             )
             loop.call_soon_threadsafe(queue.put_nowait, {"event": "done", "data": ""})
+            return
+        loop.call_soon_threadsafe(queue.put_nowait, {"event": "done", "data": ""})
         _sessions.pop(req.session_id, None)
 
     loop.run_in_executor(_executor, run_close)

@@ -17,7 +17,14 @@ export default function ChatMessage({ message, onApprovalResolved }: Props) {
         }`}
       >
         {message.content || (
-          <span className="inline-block w-2 h-4 bg-zinc-500 animate-pulse rounded" />
+          <span className="flex items-center gap-2 text-zinc-400 text-xs">
+            <span className="flex gap-1">
+              <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce [animation-delay:-0.3s]" />
+              <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce [animation-delay:-0.15s]" />
+              <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" />
+            </span>
+            Generating… (local model, ~30–60 s)
+          </span>
         )}
 
         {message.approvalRequest && (

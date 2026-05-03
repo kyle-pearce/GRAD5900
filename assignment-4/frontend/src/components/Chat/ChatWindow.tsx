@@ -42,7 +42,7 @@ export default function ChatWindow({ messages, loading, onApprovalResolved, onSe
         <textarea
           className="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-4 py-2 text-sm text-zinc-100 resize-none focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder-zinc-500"
           rows={2}
-          placeholder="Type a message or click a skill to start…"
+          placeholder={loading ? "Waiting for model response…" : "Type a message or click a skill to start…"}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {

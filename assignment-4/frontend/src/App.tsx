@@ -23,7 +23,7 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/onboard" element={<Onboard />} />
+      <Route path="/onboard" element={<Onboard onComplete={() => setOnboarded(true)} />} />
       <Route
         path="/"
         element={onboarded ? <Chat /> : <Navigate to="/onboard" replace />}

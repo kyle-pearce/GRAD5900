@@ -7,7 +7,7 @@ import { useDefaultContext, saveCustomContext } from "../api/client";
 type Step = "choose" | "form" | "loading" | "done";
 
 
-export default function Onboard() {
+export default function Onboard({ onComplete }: { onComplete?: () => void }) {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>("choose");
   const [error, setError] = useState<string | null>(null);
@@ -54,7 +54,7 @@ export default function Onboard() {
             Your context files are ready. The assistant will use them in every skill.
           </p>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => { onComplete?.(); navigate("/"); }}
             className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition"
           >
             Open the assistant →
