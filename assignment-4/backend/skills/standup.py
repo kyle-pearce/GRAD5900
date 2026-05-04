@@ -3,6 +3,7 @@ from .base import BaseSkill
 
 class StandupSkill(BaseSkill):
     REQUIRED_CONTEXT = ["goals.md", "projects.md", "mental-model.md"]
+    TRIGGER_MESSAGE = "Start my end-of-day standup."
 
     system_prompt = """You are running a daily standup check-in for a knowledge worker.
 

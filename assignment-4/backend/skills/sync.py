@@ -3,6 +3,7 @@ from .base import BaseSkill
 
 class SyncSkill(BaseSkill):
     REQUIRED_CONTEXT = ["projects.md"]
+    TRIGGER_MESSAGE = "I need to log a meeting."
 
     system_prompt = """You are capturing notes from a meeting or sync.
 

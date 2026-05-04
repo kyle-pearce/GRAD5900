@@ -3,6 +3,7 @@ from .base import BaseSkill
 
 class RefinementSkill(BaseSkill):
     REQUIRED_CONTEXT = ["goals.md", "projects.md"]
+    TRIGGER_MESSAGE = "Help me plan my week."
 
     system_prompt = """You are helping the user plan their week (sprint refinement).
 

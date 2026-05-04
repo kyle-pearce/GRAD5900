@@ -5,6 +5,7 @@ from ..knowledge.retriever import query_knowledge
 
 class OneOnOneSkill(BaseSkill):
     REQUIRED_CONTEXT = ["goals.md", "projects.md", "mental-model.md"]
+    TRIGGER_MESSAGE = "Start my 1:1 prep."
 
     system_prompt = """You are helping the user prepare for a 1:1 meeting.
 

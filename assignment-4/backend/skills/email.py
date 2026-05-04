@@ -17,6 +17,7 @@ from ..approval import store_pending_draft
 
 class EmailSkill(BaseSkill):
     REQUIRED_CONTEXT = ["writing-style.md", "email-goals.md"]
+    TRIGGER_MESSAGE = "I need to draft an email."
 
     system_prompt = """You are drafting an email reply for the user.
 
@@ -47,8 +48,7 @@ Flag any sentence you are uncertain about in tone with a brief note."""
 
         messages = [{"role": "system", "content": system}]
         messages.extend(history)
-        if user_message:
-            messages.append({"role": "user", "content": user_message})
+        messages.append({"role": "user", "content": user_message or self.TRIGGER_MESSAGE})
 
         # Stream the draft
         draft_tokens: list[str] = []

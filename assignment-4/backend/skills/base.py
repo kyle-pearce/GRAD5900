@@ -15,6 +15,7 @@ from ..core.ollama_client import stream_chat
 
 class BaseSkill:
     REQUIRED_CONTEXT: list[str] = []
+    TRIGGER_MESSAGE: str = "Begin."
     system_prompt: str = ""
 
     def _build_system(self) -> str:
@@ -41,8 +42,7 @@ class BaseSkill:
         """
         messages = [{"role": "system", "content": self._build_system()}]
         messages.extend(history)
-        if user_message:
-            messages.append({"role": "user", "content": user_message})
+        messages.append({"role": "user", "content": user_message or self.TRIGGER_MESSAGE})
 
         for token in stream_chat(messages):
             yield {"event": "token", "data": token}
