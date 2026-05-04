@@ -66,8 +66,8 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 On first load you'll be prompted to set up your context:
 
-- **Use default context** — copies Kyle's writing style, email preferences, and mental model
-  from the Windows host (`C:\Users\kyle\Downloads\`) via WSL2 mount. Takes one click.
+- **Use default context** — copies starter templates for writing style, email preferences,
+  mental model, goals, and projects from `context/defaults/`. Takes one click.
 - **Build your own** — answer 5 questions and the assistant generates your context files
   using llama3.2:3b. Takes 2–3 minutes.
 

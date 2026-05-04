@@ -19,22 +19,6 @@ router = APIRouter(prefix="/api/onboarding")
 
 ONBOARDED_MARKER = settings.context_dir / ".onboarded"
 
-PLACEHOLDER_GOALS = """# Goals
-
-[Add your long-term goals and current priorities here.]
-
-Example:
-- Complete Applied GenAI course with a strong final project
-- Build a personal AI system I actually use daily
-"""
-
-PLACEHOLDER_PROJECTS = """# Current Projects
-
-[Add your active projects, stakeholders, and current status here.]
-
-Example:
-- **AI Assistant (GRAD 5900)**: Assignment 4 — building the UI layer. Due end of April.
-"""
 
 CONTEXT_GENERATORS = {
     "goals.md": (
@@ -81,35 +65,15 @@ async def status():
 async def use_defaults():
     settings.context_dir.mkdir(parents=True, exist_ok=True)
 
-    missing = []
-    copies = {}
-
-    src_map = {
-        "writing-style.md": settings.default_writing_style_src,
-        "email-goals.md": settings.default_email_style_src,
-        "mental-model.md": settings.default_mental_model_src,
-    }
-
-    for dest_name, src_path in src_map.items():
-        dest = settings.context_dir / dest_name
-        if src_path.exists():
-            shutil.copy2(src_path, dest)
-            copies[dest_name] = str(dest)
-        else:
-            missing.append(str(src_path))
-
-    # Write placeholder files for goals and projects
-    (settings.context_dir / "goals.md").write_text(PLACEHOLDER_GOALS, encoding="utf-8")
-    (settings.context_dir / "projects.md").write_text(PLACEHOLDER_PROJECTS, encoding="utf-8")
+    copied = []
+    for src in settings.defaults_dir.iterdir():
+        if src.suffix == ".md":
+            shutil.copy2(src, settings.context_dir / src.name)
+            copied.append(src.name)
 
     ONBOARDED_MARKER.touch()
 
-    return {
-        "status": "ok",
-        "copied": copies,
-        "missing_sources": missing,
-        "note": "goals.md and projects.md use placeholders — edit them in context/ to personalize.",
-    }
+    return {"status": "ok", "copied": copied}
 
 
 class CustomContextRequest(BaseModel):
